@@ -7,15 +7,51 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import {db,collection,getDocs} from './../firebase';
 import { ActivityIndicator } from 'react-native-paper';
 import Avatar from './Avatar';
+import {btiment} from './constante.js'
+import Map from './Map.js';
+import Map2 from './Map2.js';
+
 export default function Event({navigation}){
   
   const [eventData, setEventData] = useState([]);
+  const [direction,setDirection]=useState('');
+  const flatBatiment = [
+    ...btiment.batiment.amphi,
+    ...btiment.batiment.blocs,
+    ...btiment.batiment.laboratoires,
+    ...btiment.batiment.parking,
+    ...btiment.batiment.toilettes,
+    ...btiment.batiment.buffets,
+    ...btiment.batiment.bibliotheques,
+    ...btiment.batiment.departements,
+    btiment.batiment.affichage,
+    btiment.batiment.terrain,
+    btiment.batiment.anapec,
+    btiment.batiment.ucd,
+    btiment.batiment.mosquée,
+    btiment.batiment.administration,
+  ];
+
+  const getLocation = (selectedItem) => {
+    // Find the selected item in the flatBatiment array
+    const selectedLocation = flatBatiment.find(item => item.name.toUpperCase() === selectedItem);
+  
+    if (selectedLocation ) {
+     
+     setDirection(selectedLocation)
+    
+        } else {
+      // Return a default location if the selected item is not found
+      return { latitude: 0, longtitude: 0 };
+    }
+  };
+
 
   const getDataEvent= async()=>{
     try {
@@ -59,12 +95,12 @@ export default function Event({navigation}){
             <View style={[styles.headerAction, { alignItems: 'flex-end' }]}>
               <TouchableOpacity
                 onPress={() => {
-                  // handle onPress
+                getDataEvent()
                 }}>
                 <FeatherIcon
                   color="#000"
-                  name="more-vertical"
-                  size={20} />
+                  name="loader"
+                  size={24} />
               </TouchableOpacity>
 
 
@@ -73,35 +109,53 @@ export default function Event({navigation}){
             </View>
           </View>
           <ScrollView>
-          {eventData.length > 0 ? (
+          
+          {eventData.length > 0 ? (eventData.map((item,index)=>
          <View>
-          <Text style={styles.title}>{eventData[0].intitule}</Text>
-
+          <View style={{flext:1,justifyContent:'center'}}>
+            <Text style={styles.title}>{item.intitule}</Text>
+            </View>
           <View style={styles.row}>
-            <Text style={styles.rowField}>Date de evenemeent  </Text>
+            <Text style={styles.rowField}>Date the event </Text>
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>{eventData[0].calender}</Text>
+              <Text style={styles.badgeText}>{item.calender}</Text>
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={styles.rowField}>Heure de  début       </Text>
+            <Text style={styles.rowField}>Hour start time       </Text>
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>{eventData[0].dateDebut}</Text>
+              <Text style={styles.badgeText}>{item.dateDebut}</Text>
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={styles.rowField}>Heure de fin               </Text>
+            <Text style={styles.rowField}>Hour end event              </Text>
         
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>{eventData[0].dateFin}</Text>
+              <Text style={styles.badgeText}>{item.dateFin}</Text>
             </View>
           </View>
        
+          <View style={styles.row}>
+            <Text style={styles.rowField}>Place               </Text>
+        
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{item.place}</Text>
+            </View>
+            <TouchableOpacity
+                onPress={() => {
+             getLocation(item.place)
+                }} style={{marginHorizontal:10}}>
+                <FeatherIcon
+                  color="#000"
+                  name="map-pin"
+                  size={30} />
+              </TouchableOpacity>
+          </View>
 
           <View style={styles.row2}>
-            <Text style={styles.rowField}>Personnes </Text>
+            <Text style={styles.rowField}>Person </Text>
             <FlatList
-              data={eventData[0].personnes}
+              data={item.personnes}
               renderItem={({item}) => <Avatar name= {item}/>}
                horizontal
             />
@@ -110,12 +164,32 @@ export default function Event({navigation}){
           <Text style={styles.subtitle}>Description</Text>
 
           <Text style={styles.paragraph}>
-           {eventData[0].description}
+           {item.description}
           </Text>
+          <View style={{borderBottomWidth:2}}></View>
           </View>
-        ):(<ActivityIndicator></ActivityIndicator>)}
+          
+        )):(<ActivityIndicator></ActivityIndicator>)}
+            {direction?
+               <View style={{position:'absolute',height:Dimensions.get('window').height/2,width:Dimensions.get('window').width-30,marginTop:-5,zIndex:20}}>
+              <View style={{flexDirection:'row' ,justifyContent:'flex-end'}}>
+              <TouchableOpacity
+                    onPress={() => {
+                    setDirection('')
+                    }}>
+                    <View style={{justifyContent:'flex-end'}}>
+                      <FeatherIcon color="#000" name="x" size={30} />
+                   </View>
+               </TouchableOpacity>
+              </View>
+               
+                  <Map destination={direction.location} title={direction.title} description={direction.description}/>
+              </View>:''}
+            
+        
         </ScrollView>
         </View>
+       
       </SafeAreaView>
 
     </View>
@@ -131,11 +205,11 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   title: {
-    fontSize: 23,
+    fontSize: 19,
     fontWeight: '600',
     color: '#1e1e1e',
-    marginTop: 22,
-    marginBottom: 10,
+    marginTop: 10,
+    marginBottom: 8,
     textAlign:'center'
   },
   avatar: {
@@ -264,4 +338,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#fff',
   },
+ 
 });

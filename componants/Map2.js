@@ -7,12 +7,14 @@ import * as Location from 'expo-location';
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBa6wKAcoJEA5h_gzJBuIqU6UNKc1sXbQk";
 
-export default function Map(props) {
-
+export default function Map2(props) {
+//   const route = useRoute();
   const [userLocation, setUserLocation] = useState(null);
-
-const longitude=props.destination.longtitude;
+//   const latitude = route.params?.latitude;
+//   const longitude = route.params?.longitude;
+//   const title = route.params?.title;
 const latitude=props.destination.latitude;
+const longitude=props.destination.longtitude;
 const description=props.description
 const title=props.title
 const [sattelite,setSattelite]=useState(false)

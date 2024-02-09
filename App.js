@@ -11,6 +11,8 @@ import Sblash from './componants/sblash';
 import Sitting from './componants/Sitting';
 import Home from './componants/Home';
 import Event from './componants/Event';
+import AjouterEvent from './componants/AjouterEvent';
+import Map from './componants/Map';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,6 +32,7 @@ const AuthStack = () => {
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" options={{headerShown:false}}  component={Login} />
       <Stack.Screen name="enregistrer" options={{headerShown:false}}  component={Enregistrer} />
+      <Stack.Screen name="Map" options={{headerShown:false}} component={Map} />
     </Stack.Navigator>
   );
 };
@@ -46,11 +49,9 @@ const MainTabNavigator = () => {
               iconName =focused? 'home':'home-variant-outline';
             } else if (route.name === 'Event') {
               iconName = focused ?  'alpha-c-box':'alpha-c-box-outline';
-            }else if (route.name === 'Sitting') {
-              iconName =focused?'cog-refresh': 'cog-refresh-outline';
+            }else if (route.name === 'AjouterEvent') {
+              iconName =focused?'bookmark-plus': 'bookmark-plus-outline';
             }
-            
-           
 
             return <IconButton icon={iconName} size={30} color={color} />;
           },
@@ -58,7 +59,7 @@ const MainTabNavigator = () => {
       >
         <Tab.Screen name="Home" options={{headerShown:false}} component={Home} />
         <Tab.Screen name="Event" options={{headerShown:false}} component={Event} />
-        <Tab.Screen name="Sitting" options={{headerShown:false}} component={Sitting} />
+        <Tab.Screen name="AjouterEvent" options={{headerShown:false}} component={AjouterEvent} />
 
         
       </Tab.Navigator>

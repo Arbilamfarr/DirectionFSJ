@@ -8,19 +8,53 @@ import {
   TextInput, Modal,Pressable
 } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import Map from './Map';
+import Map2 from './Map2';
 import SelectDropdown from 'react-native-select-dropdown'
 import { Button } from 'react-native-paper';
+import {btiment,amphis,blocs,laboratoires,parking,toilettes,buffets,bibliotheques,departements,affichage,terrain,anapec,ucd,mosquée} from './constante.js'
+import Sitting from './Sitting.js';
+import Profile from './Profile.js';
 
-const latitude=33.225397172070565;
-const longitude=-8.486188605007804;
+
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [destination,setDestination]=useState({latitude:33.225397172070565,longtitude:-8.486188605007804})
+   const [description,setDescription]=useState("faculté science el jadida")
+   const [title,setTitle]=useState("fsj")
+  // const salles = Array.from({ length: 56 }, (_, index) => `Salle ${index + 1}`);
+  const batiment=[...amphis,...blocs,...laboratoires,...parking,...toilettes,...buffets,...bibliotheques,...departements,affichage,terrain,anapec,ucd,mosquée]
+  const flatBatiment = [
+    ...btiment.batiment.amphi,
+    ...btiment.batiment.blocs,
+    ...btiment.batiment.laboratoires,
+    ...btiment.batiment.parking,
+    ...btiment.batiment.toilettes,
+    ...btiment.batiment.buffets,
+    ...btiment.batiment.bibliotheques,
+    ...btiment.batiment.departements,
+    btiment.batiment.affichage,
+    btiment.batiment.terrain,
+    btiment.batiment.anapec,
+    btiment.batiment.ucd,
+    btiment.batiment.mosquée,
+    btiment.batiment.administration,
+  ];
+  
 
-  const salles = Array.from({ length: 56 }, (_, index) => `Salle ${index + 1}`);
-  const batiment=['Amphi Nafis','Amphi Bayrouni','Amphi Farabi','Amphi iben Younnes','Amphi iben Haitam','Nouvel Amphi','D. informatique','D. Chimie','D. Mathematique' ,'D. Physique','D. biologique','D. geologique','B. Etudiants','B. Professeurs','Toilet 1','Toilet 2','Bloc A','Bloc B','Bloc C','Bloc D','centre doctorat ucd','Bibliotheque 1','Bibliotheque 2',...salles]
- 
+  const getLocation = (selectedItem) => {
+    // Find the selected item in the flatBatiment array
+    const selectedLocation = flatBatiment.find(item => item.name.toUpperCase() === selectedItem);
+  
+    if (selectedLocation && selectedLocation.location) {
+      return selectedLocation;
+    } else {
+      // Return a default location if the selected item is not found
+      return { latitude: 0, longtitude: 0 };
+    }
+  };
+  
+  
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={styles.container}>
@@ -36,8 +70,9 @@ export default function Home() {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World </Text>
-            
+         
+            <Text style={styles.modalText}>elarbi lamfarrad</Text>
+          
               <Button icon="location-exit"
               
                onPress={() => setModalVisible(!modalVisible)}
@@ -62,34 +97,50 @@ export default function Home() {
               </View>
             </TouchableOpacity>
            
-            
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}>
-              <View style={styles.action}>
+            <Text style={styles.title}>Place Destination</Text>
+
+              <View style={[styles.headerAction, { alignItems: 'center' }]}>
+              
+              <TouchableOpacity
+                onPress={() => {
+                 
+                }}>
                 <FeatherIcon
-                  color="#6a99e3"
-                  name="bell"
-                  size={22} />
-              </View>
-            </TouchableOpacity>
+                  color="#000"
+                  name="chevron-right"
+                  size={35} />
+              </TouchableOpacity>
+           
+
+
+            </View>
 
            
           </View>
 
-          <Text style={styles.title}>Place Destination</Text>
 
           <View style={styles.search}>
             <View style={styles.searchInput}>
               <View style={styles.inputWrapper}>
               
-                 <View>
+                 <View style={{flexDirection:'row'}}>
+                 <View style={styles.btn}>
+                  <FeatherIcon
+                    color="#9eadba"
+                    name="map-pin"
+                    size={32} />
+                </View>
                  <SelectDropdown
                   
 	                data={batiment}
 	                 onSelect={(selectedItem, index) => {
-		               console.log(selectedItem, index)
+                    const selectedLocation = getLocation(selectedItem);
+                    setDestination(selectedLocation.location);
+                    setDescription(selectedLocation.description);
+                    setTitle(selectedLocation.name);
+
+
+                  // setDestination({latitude:btiment.batiment.terrain.location.latitude,longtitude:btiment.batiment.terrain.location.longtitude})
 	                 }}
 	                buttonTextAfterSelection={(selectedItem, index) => {
 	
@@ -100,11 +151,13 @@ export default function Home() {
 	                }}
                   buttonStyle={{
                            height:50,
-                           width:"100%",
+                           width:"90%",
                            paddingLeft:22,
                            flexDirection:'row',
                            alignItems:'center',
                            borderRadius:10,
+                           marginLeft:15,
+                           marginRight:15
                            
                   }}
                   searchInputStyle={{
@@ -114,7 +167,7 @@ export default function Home() {
                     padding: 10, 
                     backgroundColor: '#ffffff', 
                     color: '#333333', 
-                    fontSize: 16,
+                    fontSize: 18,
                       }}
                      search={true}
                      searchPlaceHolder='Saisir destination'
@@ -122,44 +175,30 @@ export default function Home() {
                       {
                         borderRadius:10,
                         height:'60%',
-                        width:'70%',
+                        width:'80%',
                         paddingTop:2,
+                        paddingHorizontal:2,
                         alignItems:'center',
-
-                       
-                        
                       }
                      }
-                   
+                     defaultButtonText="choose destination"
                   />
+                 
                  </View>
 
-                <View style={styles.inputIcon}>
-                  <FeatherIcon
-                    color="#9eadba"
-                    name="map-pin"
-                    size={32} />
-                </View>
+               
               </View>
             </View>
+           
 
-            {/* <TouchableOpacity
-              onPress={() => {
-               setDestination( {
-                latitude:33.222242,
-                longtitude: -8.484841,
-               })
-              }}>
-              <View style={styles.btn}>
-                <Text style={styles.btnText}>Submit</Text>
-              </View>
-            </TouchableOpacity> */}
+         
+            
           </View>
         </View>
 
         <View style={styles.placeholder}>
           <View style={styles.placeholderInset}>
-           <Map destination={destination} ></Map>
+           <Map2 title={title} destination={destination} description={description} ></Map2>
           </View>
         </View>
       </View>
@@ -170,17 +209,21 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     marginTop:20,
-    padding: 24,
+    padding: 5,
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
   },
   title: {
-    fontSize: 27,
-    fontWeight: '700',
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
     color: '#222',
-    marginTop: 24,
-    marginBottom: 16,
+    
+   
+    marginTop: 10,
+    marginBottom: 10,
   },
   /** Action */
   action: {
@@ -190,6 +233,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     backgroundColor: '#e8f0f9',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerAction: {
+    width: 40,
+    height: 40,
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
    modalView: {
@@ -237,6 +286,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginHorizontal: -8,
+    padding:15,
   },
   /** Search */
   search: {
@@ -250,16 +300,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
     
   },
-  /** Input */
-  // input: {
-  //    borderColor: '#9eadba', // Border color
-  //   borderWidth: 1, // Border width
-  //   borderRadius: 8, // Border radius
-  //   padding: 10, // Padding
-  //   backgroundColor: '', // Background color
-  //   color: '#333333', // Text color
-  //   fontSize: 16, // Font size
-  // },
+
   inputWrapper: {
     position: 'relative',
     width: '100%',
@@ -276,15 +317,14 @@ const styles = StyleSheet.create({
   },
   /** Button */
   btn: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    backgroundColor: '#222',
-    borderColor: '#222',
+    paddingVertical: 9,
+    position:'absolute',
+    zIndex: 1000,
+    marginLeft:20
+    
   },
   btnText: {
     fontSize: 17,
@@ -305,7 +345,7 @@ const styles = StyleSheet.create({
   placeholderInset: {
     borderWidth: 4,
     borderColor: '#e5e7eb',
-    borderStyle: 'dashed',
+    borderStyle: 'solid',
     borderRadius: 9,
     flexGrow: 1,
     flexShrink: 1,
