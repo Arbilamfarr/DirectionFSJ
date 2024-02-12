@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
   View,
   Text,Alert,
   TouchableOpacity,
-  TextInput, Modal,Pressable
+  TextInput, Modal
 } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Map2 from './Map2';
 import SelectDropdown from 'react-native-select-dropdown'
 import { Button } from 'react-native-paper';
+import { signOut } from "firebase/auth";
+import { auth } from './../firebase.js';
 import {btiment,amphis,blocs,laboratoires,parking,toilettes,buffets,bibliotheques,departements,affichage,terrain,anapec,ucd,mosquée} from './constante.js'
-import Sitting from './Sitting.js';
-import Profile from './Profile.js';
 
 
-export default function Home() {
+
+
+export default function Home({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [destination,setDestination]=useState({latitude:33.225397172070565,longtitude:-8.486188605007804})
+  const [destination,setDestination]=useState({latitude:0,longtitude:0})
    const [description,setDescription]=useState("faculté science el jadida")
    const [title,setTitle]=useState("fsj")
-  // const salles = Array.from({ length: 56 }, (_, index) => `Salle ${index + 1}`);
+   const [user, setUser] = useState(null);
+
   const batiment=[...amphis,...blocs,...laboratoires,...parking,...toilettes,...buffets,...bibliotheques,...departements,affichage,terrain,anapec,ucd,mosquée]
   const flatBatiment = [
     ...btiment.batiment.amphi,
@@ -40,6 +43,25 @@ export default function Home() {
     btiment.batiment.administration,
   ];
   
+ const handelLogOut=()=>{
+  signOut(auth).then(() => {
+   navigation.navigate('Auth')
+  }).catch((error) => {
+    Alert.alert("Log Out","error for Log Out")
+  });
+  
+ }
+  useEffect(() => {
+   
+    const user = auth.currentUser;
+    if(user){
+    setUser(user)
+    console.log(user)}
+    else{
+      setUser("not connected");
+    }
+
+  }, []); 
 
   const getLocation = (selectedItem) => {
     // Find the selected item in the flatBatiment array
@@ -48,19 +70,17 @@ export default function Home() {
     if (selectedLocation && selectedLocation.location) {
       return selectedLocation;
     } else {
-      // Return a default location if the selected item is not found
       return { latitude: 0, longtitude: 0 };
     }
   };
-  
-  
   
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={styles.container}>
         <View>
           <View style={styles.actionWrapper}>
-          <Modal
+          <Modal 
+         
         animationType="left"
         transparent={true}
         visible={modalVisible}
@@ -71,14 +91,24 @@ export default function Home() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
          
-            <Text style={styles.modalText}>elarbi lamfarrad</Text>
-          
-              <Button icon="location-exit"
-              
+          <Button          
                onPress={() => setModalVisible(!modalVisible)}
                style={[styles.button, styles.buttonClose]}>
-                <Text style={{color:'black'}}>Exit</Text>
+               <FeatherIcon
+                  color="#6a99e3"
+                  name="x-square"
+                  size={22} />
               </Button>
+            <Text style={styles.modalText}>{user?user.email:''}</Text>
+          
+            <Button
+        mode="contained"
+        onPress={()=>handelLogOut()}
+        style={{ marginVertical: 8, backgroundColor: '#e74c3c' }}
+      >
+      <FeatherIcon name="log-out" color="white" size={16} />
+        Log out
+      </Button>
              
           </View>
         </View>
@@ -96,29 +126,19 @@ export default function Home() {
                   size={22} />
               </View>
             </TouchableOpacity>
-           
             <Text style={styles.title}>Place Destination</Text>
-
               <View style={[styles.headerAction, { alignItems: 'center' }]}>
-              
               <TouchableOpacity
                 onPress={() => {
-                 
+                 navigation.navigate('Event')
                 }}>
                 <FeatherIcon
                   color="#000"
                   name="chevron-right"
                   size={35} />
               </TouchableOpacity>
-           
-
-
-            </View>
-
-           
+            </View>          
           </View>
-
-
           <View style={styles.search}>
             <View style={styles.searchInput}>
               <View style={styles.inputWrapper}>
@@ -138,9 +158,6 @@ export default function Home() {
                     setDestination(selectedLocation.location);
                     setDescription(selectedLocation.description);
                     setTitle(selectedLocation.name);
-
-
-                  // setDestination({latitude:btiment.batiment.terrain.location.latitude,longtitude:btiment.batiment.terrain.location.longtitude})
 	                 }}
 	                buttonTextAfterSelection={(selectedItem, index) => {
 	
@@ -183,16 +200,9 @@ export default function Home() {
                      }
                      defaultButtonText="choose destination"
                   />
-                 
                  </View>
-
-               
               </View>
             </View>
-           
-
-         
-            
           </View>
         </View>
 
@@ -242,12 +252,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
    modalView: {
-    width:200,
+    width:300,
     marginTop: 60,
     marginLeft:20,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 10,
+    padding: 5,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -259,18 +269,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 5,
-    
-    elevation: 2,
+  
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
-    opacity:0.8,
-    
+   
+   
   },
   textStyle: {
     color: 'white',

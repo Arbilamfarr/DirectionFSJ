@@ -15,12 +15,12 @@ import { ActivityIndicator } from 'react-native-paper';
 import Avatar from './Avatar';
 import {btiment} from './constante.js'
 import Map from './Map.js';
-import Map2 from './Map2.js';
 
 export default function Event({navigation}){
   
   const [eventData, setEventData] = useState([]);
   const [direction,setDirection]=useState('');
+  const [ind,setInd]=useState('');
   const flatBatiment = [
     ...btiment.batiment.amphi,
     ...btiment.batiment.blocs,
@@ -53,23 +53,40 @@ export default function Event({navigation}){
   };
 
 
-  const getDataEvent= async()=>{
-    try {
-      const querySnapshot = await getDocs(collection(db, 'Event'));
-
-     
-      const data = querySnapshot.docs.map((doc) => doc.data());
-      setEventData(data);
-      console.log(data)
+  // const getDataEvent= async()=>{
+  //   try {
+  //     const querySnapshot = await getDocs(collection(db, 'Event'));
+  //     const data = querySnapshot.docs.map((doc) => doc.data());
+  //     setEventData(data);
+  //     console.log(data)
       
+  //   } catch (error) {
+  //     console.error('Error getting documents: ', error);
+  //   }
+  // }
+  const getDataEvent = async () => {
+    try {
+      const today = new Date();
+      const todayString = today.toLocaleDateString('fr-FR'); // Format the current date as "dd/MM/yyyy"
+      console.log(todayString);
+      const querySnapshot = await getDocs(collection(db, 'Event'));
+      const data = querySnapshot.docs
+        .map((doc) => doc.data())
+        .filter((event) => event.calender === todayString);
+  
+      setEventData(data);
+      console.log(data);
     } catch (error) {
       console.error('Error getting documents: ', error);
     }
-  }
+  };
+  
+  
   useEffect(() => {
+   
     getDataEvent()
     
-  } , []);
+  } ,[]);
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -96,6 +113,7 @@ export default function Event({navigation}){
               <TouchableOpacity
                 onPress={() => {
                 getDataEvent()
+                
                 }}>
                 <FeatherIcon
                   color="#000"
@@ -112,6 +130,21 @@ export default function Event({navigation}){
           
           {eventData.length > 0 ? (eventData.map((item,index)=>
          <View>
+         {direction&& ind==index ?
+               <View style={{position:'absolute',height:Dimensions.get('window').height/2,width:Dimensions.get('window').width-30,marginTop:-5,zIndex:20}}>
+              <View style={{flexDirection:'row' ,justifyContent:'flex-end'}}>
+              <TouchableOpacity
+                    onPress={() => {
+                    setDirection('')
+                    }}>
+                    <View style={{justifyContent:'flex-end'}}>
+                      <FeatherIcon color="#000" name="x" size={30} />
+                   </View>
+               </TouchableOpacity>
+              </View>
+               
+                  <Map destination={direction.location} title={direction.title} description={direction.description}/>
+              </View>:''}
           <View style={{flext:1,justifyContent:'center'}}>
             <Text style={styles.title}>{item.intitule}</Text>
             </View>
@@ -136,20 +169,22 @@ export default function Event({navigation}){
           </View>
        
           <View style={styles.row}>
-            <Text style={styles.rowField}>Place               </Text>
+            <Text style={styles.rowField}>Place</Text>
         
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>{item.place}</Text>
-            </View>
-            <TouchableOpacity
+              <Text style={styles.badgeText}>{item.place} <TouchableOpacity
                 onPress={() => {
              getLocation(item.place)
+             setInd(index)
+
                 }} style={{marginHorizontal:10}}>
                 <FeatherIcon
-                  color="#000"
+                  color="#0a3047"
                   name="map-pin"
-                  size={30} />
-              </TouchableOpacity>
+                  size={24} />
+              </TouchableOpacity></Text>
+            </View>
+           
           </View>
 
           <View style={styles.row2}>
@@ -166,25 +201,11 @@ export default function Event({navigation}){
           <Text style={styles.paragraph}>
            {item.description}
           </Text>
-          <View style={{borderBottomWidth:2}}></View>
+          <View style={{borderBottomWidth:2,borderColor:'#09699b'}}></View>
           </View>
           
         )):(<ActivityIndicator></ActivityIndicator>)}
-            {direction?
-               <View style={{position:'absolute',height:Dimensions.get('window').height/2,width:Dimensions.get('window').width-30,marginTop:-5,zIndex:20}}>
-              <View style={{flexDirection:'row' ,justifyContent:'flex-end'}}>
-              <TouchableOpacity
-                    onPress={() => {
-                    setDirection('')
-                    }}>
-                    <View style={{justifyContent:'flex-end'}}>
-                      <FeatherIcon color="#000" name="x" size={30} />
-                   </View>
-               </TouchableOpacity>
-              </View>
-               
-                  <Map destination={direction.location} title={direction.title} description={direction.description}/>
-              </View>:''}
+          
             
         
         </ScrollView>
@@ -283,7 +304,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: '#0e0e0e',
-    width: 170,
+    width: 140,
     
   },
   rowValue: {
@@ -312,12 +333,12 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffa500',
+    backgroundColor: '#bde6fa',
   },
   badgeText: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#fff',
+    color: '#0a3047',
   },
   
   /** Button */

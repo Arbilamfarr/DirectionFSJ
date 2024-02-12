@@ -47,13 +47,16 @@ const [sattelite,setSattelite]=useState(false)
       });
     };
 
-    fetchUserLocation();
+    const intervalId = setInterval(() => {
+      fetchUserLocation();
+    }, 1000);
+      return () => clearInterval(intervalId);
   }, []);
 
   return (
     <View style={styles.container}>
       <MapView
-        minZoomLevel={17}
+        minZoomLevel={14}
         maxZoomLevel={20}
         mapType={sattelite==true?'hybrid':'standard'}
         style={styles.map}
@@ -61,7 +64,8 @@ const [sattelite,setSattelite]=useState(false)
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
         showsMyLocationButton={true}
-        followsUserLocation={true} // Optionally, set this to true if you want the map to follow the user's location
+        followsUserLocation={true}
+        loadingEnabled 
       > 
         <Marker
           coordinate={{
@@ -73,7 +77,7 @@ const [sattelite,setSattelite]=useState(false)
         />
         {userLocation && (
           <MapViewDirections
-            origin={userLocation} // Use live user location as the origin
+            origin={userLocation}
             destination={{
               latitude: latitude,
               longitude: longitude,
@@ -87,7 +91,7 @@ const [sattelite,setSattelite]=useState(false)
       </MapView>
       <TouchableOpacity style={styles.buttonSattelite} onPress={()=>{setSattelite(!sattelite)
       }}>
-        <Image source={require("./../assets/images/standard.png")} style={[styles.imageSattelite,{display:!sattelite?'none':null}]}></Image>
+      <Image source={require("./../assets/images/standard.png")} style={[styles.imageSattelite,{display:!sattelite?'none':null}]}></Image>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonSattelite} onPress={()=>{setSattelite(!sattelite)
       }}>

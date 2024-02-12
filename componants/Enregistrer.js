@@ -2,20 +2,32 @@
 import React, { useState } from 'react';
 import { View, ImageBackground, StyleSheet, Text as RNText, Dimensions, Alert } from 'react-native';
 import { TextInput, Button,Text } from 'react-native-paper';
-import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { createUserWithEmailAndPassword,sendEmailVerification } from '@firebase/auth';
 import  {auth}  from '../firebase'; // Assurez-vous d'ajuster le chemin en conséquence
 
 const Enregistrer = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+// // Send verification email
+const sendEmailVerificationUser = async (user) => {
+  try {
+    await sendEmailVerification(user);
+    
+    Alert.alert(
+      "Verification Email Sent",
+      "Please check your email for verification"
+    );
+  } catch (error) {
+    console.error("Error sending verification email:", error);
+    Alert.alert("Error", "Failed to send verification email");
+  }
+};
   const handleSignUp = async () => {
-    if (!email || !password) {
+    if (email=='' || password=='') {
       Alert.alert('Error', 'Please enter both email and password');
       return;
     }
   
-    // Regular expression to check if the email has the domain "@ucd.ac.ma"
     const emailRegex = /^[^\s@]+@ucd\.ac\.ma$/i;
   
     if (!emailRegex.test(email)) {
@@ -25,11 +37,12 @@ const Enregistrer = ({navigation}) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log('Utilisateur enregistré :', user);
-      Alert.alert('Inscription réussie !');
-      navigation.navigate("Main",{email:email})
+      navigation.navigate("Login")
+      sendEmailVerificationUser(user)
+      setEmail('')
+      setPassword('')
     } catch (error) {
-      console.error('Erreur d\'inscription :', error.message);
+   
       Alert.alert('Erreur d\'inscription', error.message);
     }}
   };
@@ -83,7 +96,7 @@ const styles = StyleSheet.create({
     height: 250,
   },
   logintext:{
-   color:"#6304c3",
+    color:"#0b5781",
    textAlign:'center',
    marginBottom:10,
    fontWeight:'600',
@@ -93,10 +106,13 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 10,
-    width:"1"
+    width:"1",
+    backgroundColor:'#e1f2fd',
   },
   button: {
     marginTop: 10,
+    backgroundColor:'#14a2e3'
+
   },
 
 });

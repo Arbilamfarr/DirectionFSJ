@@ -29,16 +29,7 @@ const AjouterEvent = ({navigation}) => {
   const [succes, setSucces] = useState(false);
   const [failed, setFailed] = useState(false);
 
-  // const [showDatePicker, setShowDatePicker] = useState(false);
-
-
-
-  // const onChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate || date;
-  //   setShowDatePicker(false);
-  //   setDate(currentDate);
-  //   console.log(currentDate)
-  // };
+ 
   
   const getId=async()=>{
     
@@ -48,8 +39,6 @@ const AjouterEvent = ({navigation}) => {
        
         const data = querySnapshot.docs.map((doc) => doc.data());
         setId_admin(data[0].id_admin);
-        console.log(data[0].id_admin)
-        
       } catch (error) {
         console.error('Error getting documents: ', error);
       }
@@ -131,7 +120,7 @@ const saveEvent = async () => {
                 <FeatherIcon
                   color="#000"
                   name="chevron-left"
-                  size={20} />
+                  size={30} />
               </TouchableOpacity>
             </View>
 
@@ -142,12 +131,12 @@ const saveEvent = async () => {
             <View style={[styles.headerAction, { alignItems: 'flex-end' }]}>
               <TouchableOpacity
                 onPress={() => {
-                  // handle onPress
+                  navigation.navigate('Home')
                 }}>
                 <FeatherIcon
                   color="#000"
-                  name="more-vertical"
-                  size={20} />
+                  name="chevron-right"
+                  size={30} />
               </TouchableOpacity>
 
 
@@ -297,7 +286,6 @@ export default AjouterEvent;
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 25,
-       
         flexGrow: 1,
         flexShrink: 1,
         flexBasis: 0,

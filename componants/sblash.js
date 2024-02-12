@@ -17,7 +17,7 @@ const Sblash = ({ navigation }) => {
         <View style={styles.buttons}>
       <TouchableOpacity onPress={() => {
             
-              navigation.navigate('Main');
+              navigation.navigate('Auth');
             }}>
             <View style={styles.btnXL}>
                           <Text style={styles.btnXLText}>Get started</Text>
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
   },
   logo: {
    
-    width: width-50, // Adjust the width as needed
-    height: 2*height/3, // Adjust the height as needed
+    width: width-50, 
+    height: 2*height/3, 
   },
   title:{
   letterSpacing:2,

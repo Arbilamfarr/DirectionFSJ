@@ -8,11 +8,8 @@ import * as Location from 'expo-location';
 const GOOGLE_MAPS_APIKEY = "AIzaSyBa6wKAcoJEA5h_gzJBuIqU6UNKc1sXbQk";
 
 export default function Map2(props) {
-//   const route = useRoute();
-  const [userLocation, setUserLocation] = useState(null);
-//   const latitude = route.params?.latitude;
-//   const longitude = route.params?.longitude;
-//   const title = route.params?.title;
+  
+ const [userLocation, setUserLocation] = useState(null);
 const latitude=props.destination.latitude;
 const longitude=props.destination.longtitude;
 const description=props.description
@@ -20,8 +17,8 @@ const title=props.title
 const [sattelite,setSattelite]=useState(false)
 
   const [region, setRegion] = useState({
-    latitude: latitude,
-    longitude: longitude,
+    latitude: 33.22573437343154,
+    longitude:  -8.48609153269298,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
@@ -63,8 +60,10 @@ const [sattelite,setSattelite]=useState(false)
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
         showsMyLocationButton={true}
-        followsUserLocation={true} // Optionally, set this to true if you want the map to follow the user's location
+        followsUserLocation={true} 
+        loadingEnabled 
       > 
+      { latitude!==0 && longitude!==0 && (
         <Marker
           coordinate={{
             latitude: latitude,
@@ -72,8 +71,8 @@ const [sattelite,setSattelite]=useState(false)
           }}
           title={title}
           description={description}
-        />
-        {userLocation && (
+        />)}
+        {userLocation && latitude!==0 && longitude!==0 && (
           <MapViewDirections
             origin={userLocation} // Use live user location as the origin
             destination={{
@@ -81,8 +80,8 @@ const [sattelite,setSattelite]=useState(false)
               longitude: longitude,
             }}
             apikey={GOOGLE_MAPS_APIKEY}
-            strokeWidth={4}
-            strokeColor="blue"
+            strokeWidth={5}
+            strokeColor="#00c8fa"
             mode="WALKING"
           />
         )}
