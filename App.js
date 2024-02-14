@@ -8,7 +8,6 @@ import { IconButton, Provider as PaperProvider, DefaultTheme } from 'react-nativ
 import Login from './componants/Login';
 import Enregistrer from './componants/Enregistrer';
 import Sblash from './componants/sblash';
-import Sitting from './componants/Sitting';
 import Home from './componants/Home';
 import Event from './componants/Event';
 import AjouterEvent from './componants/AjouterEvent';

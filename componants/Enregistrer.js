@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { View, ImageBackground, StyleSheet, Text as RNText, Dimensions, Alert } from 'react-native';
+import { View, ImageBackground, StyleSheet, Text as RNText, Dimensions, Alert, StatusBar } from 'react-native';
 import { TextInput, Button,Text } from 'react-native-paper';
 import { createUserWithEmailAndPassword,sendEmailVerification } from '@firebase/auth';
 import  {auth}  from '../firebase'; // Assurez-vous d'ajuster le chemin en conséquence
@@ -49,6 +49,8 @@ const sendEmailVerificationUser = async (user) => {
 
   return (
     <View style={styles.container}>
+        <StatusBar  backgroundColor="#097ec0" ></StatusBar>
+
       <View style={styles.logoContainer}>
         <ImageBackground
           source={require('./../assets/images/logo.png')}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Alert, Dimensions, StatusBar } from 'react-native';
 import {db,collection,addDoc,getDocs} from './../firebase'
 
 import SelectDropdown from 'react-native-select-dropdown'
@@ -110,6 +110,7 @@ const saveEvent = async () => {
 
   return (
   <View  style={styles.container}>
+    <StatusBar  backgroundColor="#097ec0" ></StatusBar>
 
    <View style={styles.header}>
             <View style={styles.headerAction}>
@@ -125,7 +126,7 @@ const saveEvent = async () => {
             </View>
 
             <Text style={styles.headerTitle}>
-             Event
+            Add Event
             </Text>
 
             <View style={[styles.headerAction, { alignItems: 'flex-end' }]}>
@@ -162,7 +163,7 @@ const saveEvent = async () => {
                
     </View>
       <View style={{ padding: 10 }}>
-      <Text style={styles.title2}>Add event</Text>
+      
       <TextInput
           label="Id"
           value={id}
@@ -183,14 +184,7 @@ const saveEvent = async () => {
           onChangeText={(text) => setDate(text)}
           style={styles.input}
         />
-          {/* {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          onChange={onChange}
-        />
-      )} */}
+         
       
            <TextInput
           label="Hour start time (hh:mm)"
@@ -215,18 +209,20 @@ const saveEvent = async () => {
                         console.log(selectedItem)
 	                }}
                     buttonStyle={{
-                           height:50,
+                           height:55,
                            width:"93%",
                            paddingLeft:22,
                            flexDirection:'row',
                            alignItems:'center',
                            borderTopRightRadius:10,
-                           borderBottomColor:'#f00',
+                           
                            paddingVertical:10,
                            marginVertical:10,
                            marginHorizontal:10,
                          borderTopEndRadius:15,
-                           backgroundColor:'white',
+                           backgroundColor:'#f1f9fe',
+                          borderBottomWidth:1,
+                          borderColor:'#b9bbbc'
                            
                            
                   }}
@@ -249,6 +245,7 @@ const saveEvent = async () => {
                         paddingTop:2,
                         paddingHorizontal:2,
                         alignItems:'center',
+                        backgroundColor:'#f1f9fe'
 
                        
                         
@@ -285,16 +282,16 @@ const saveEvent = async () => {
 export default AjouterEvent;
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 25,
+       backgroundColor:'white',
         flexGrow: 1,
         flexShrink: 1,
         flexBasis: 0,
       },
       header: {
-
+        paddingHorizontal:5,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 16,
+       
         justifyContent: 'space-between',
       },
       headerAction: {
@@ -311,7 +308,7 @@ const styles = StyleSheet.create({
       /** Profile */
       profile: {
         padding: 24,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f9fe',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
@@ -331,19 +328,12 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         fontWeight: 'normal'
       },
-      title2:{
-        fontFamily: 'sans-serif',
-        fontSize: 16,
-        fontStyle: 'normal',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        paddingVertical:10,
-      },
+     
       input:{
         marginVertical:10,
         marginHorizontal:10,
         borderTopEndRadius:15,
-       backgroundColor:'white',
+       backgroundColor:'#f1f9fe',
       },
       button:{
         marginVertical:10,

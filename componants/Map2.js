@@ -47,6 +47,12 @@ const [sattelite,setSattelite]=useState(false)
     };
 
     fetchUserLocation();
+    const intervalId = setInterval(() => {
+      fetchUserLocation()
+    }, 10000);
+
+    // Nettoyer l'intervalle lorsque le composant est démonté
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

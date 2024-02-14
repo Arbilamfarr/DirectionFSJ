@@ -5,7 +5,7 @@ import {
   View,
   Text,Alert,
   TouchableOpacity,
-  TextInput, Modal
+  TextInput, Modal, StatusBar
 } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Map2 from './Map2';
@@ -76,6 +76,8 @@ export default function Home({navigation}) {
   
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <StatusBar  backgroundColor="#097ec0" ></StatusBar>
+
       <View style={styles.container}>
         <View>
           <View style={styles.actionWrapper}>
@@ -144,12 +146,7 @@ export default function Home({navigation}) {
               <View style={styles.inputWrapper}>
               
                  <View style={{flexDirection:'row'}}>
-                 <View style={styles.btn}>
-                  <FeatherIcon
-                    color="#9eadba"
-                    name="map-pin"
-                    size={32} />
-                </View>
+                
                  <SelectDropdown
                   
 	                data={batiment}
@@ -168,13 +165,13 @@ export default function Home({navigation}) {
 	                }}
                   buttonStyle={{
                            height:50,
-                           width:"90%",
+                           width:"85%",
                            paddingLeft:22,
                            flexDirection:'row',
                            alignItems:'center',
                            borderRadius:10,
                            marginLeft:15,
-                           marginRight:15
+                           
                            
                   }}
                   searchInputStyle={{
@@ -196,11 +193,19 @@ export default function Home({navigation}) {
                         paddingTop:2,
                         paddingHorizontal:2,
                         alignItems:'center',
+                      
                       }
                      }
                      defaultButtonText="choose destination"
                   />
+                  
                  </View>
+                 <View style={styles.btn}>
+                  <FeatherIcon
+                    color='#82cef7'
+                    name="map-pin"
+                    size={32} />
+                </View>
               </View>
             </View>
           </View>
@@ -218,7 +223,7 @@ export default function Home({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:20,
+    
     padding: 5,
     flexGrow: 1,
     flexShrink: 1,
@@ -308,6 +313,7 @@ const styles = StyleSheet.create({
   },
 
   inputWrapper: {
+    flexDirection:'row',
     position: 'relative',
     width: '100%',
     borderRadius:8,
@@ -323,14 +329,9 @@ const styles = StyleSheet.create({
   },
   /** Button */
   btn: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 9,
-    position:'absolute',
-    zIndex: 1000,
-    marginLeft:20
-    
+ flex:1,
+ justifyContent:'center',
+ alignItems: 'center',  
   },
   btnText: {
     fontSize: 17,
@@ -344,14 +345,14 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 0,
     height: 400,
-    marginTop: 24,
+    marginTop: 10,
     padding: 0,
     backgroundColor: 'transparent',
   },
   placeholderInset: {
     borderWidth: 4,
-    borderColor: '#e5e7eb',
-    borderStyle: 'solid',
+    borderColor: '#bde4fa',
+    borderStyle: 'dashed',
     borderRadius: 9,
     flexGrow: 1,
     flexShrink: 1,

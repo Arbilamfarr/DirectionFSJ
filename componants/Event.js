@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {db,collection,getDocs} from './../firebase';
@@ -53,17 +54,7 @@ export default function Event({navigation}){
   };
 
 
-  // const getDataEvent= async()=>{
-  //   try {
-  //     const querySnapshot = await getDocs(collection(db, 'Event'));
-  //     const data = querySnapshot.docs.map((doc) => doc.data());
-  //     setEventData(data);
-  //     console.log(data)
-      
-  //   } catch (error) {
-  //     console.error('Error getting documents: ', error);
-  //   }
-  // }
+
   const getDataEvent = async () => {
     try {
       const today = new Date();
@@ -85,10 +76,16 @@ export default function Event({navigation}){
   useEffect(() => {
    
     getDataEvent()
-    
+    const intervalId = setInterval(() => {
+      getDataEvent();
+    }, 10000);
+
+    return () => clearInterval(intervalId);
   } ,[]);
   return (
     <View style={{ flex: 1 }}>
+        <StatusBar  backgroundColor="#097ec0" ></StatusBar>
+
       <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
     
         <View style={styles.container}>
@@ -101,24 +98,24 @@ export default function Event({navigation}){
                 <FeatherIcon
                   color="#000"
                   name="chevron-left"
-                  size={20} />
+                  size={28} />
               </TouchableOpacity>
             </View>
 
             <Text style={styles.headerTitle}>
-             Event
+             Events Today
             </Text>
 
             <View style={[styles.headerAction, { alignItems: 'flex-end' }]}>
               <TouchableOpacity
                 onPress={() => {
-                getDataEvent()
+                navigation.navigate('AjouterEvent')
                 
                 }}>
                 <FeatherIcon
                   color="#000"
-                  name="loader"
-                  size={24} />
+                  name="chevron-right"
+                  size={28} />
               </TouchableOpacity>
 
 
@@ -131,14 +128,14 @@ export default function Event({navigation}){
           {eventData.length > 0 ? (eventData.map((item,index)=>
          <View>
          {direction&& ind==index ?
-               <View style={{position:'absolute',height:Dimensions.get('window').height/2,width:Dimensions.get('window').width-30,marginTop:-5,zIndex:20}}>
+               <View style={{position:'absolute',height:2*Dimensions.get('window').height/3,width:Dimensions.get('window').width-30,marginTop:-5,zIndex:20,}}>
               <View style={{flexDirection:'row' ,justifyContent:'flex-end'}}>
               <TouchableOpacity
                     onPress={() => {
                     setDirection('')
                     }}>
                     <View style={{justifyContent:'flex-end'}}>
-                      <FeatherIcon color="#000" name="x" size={30} />
+                      <FeatherIcon color="#f24141" name="x" size={30} />
                    </View>
                </TouchableOpacity>
               </View>
@@ -219,8 +216,8 @@ export default function Event({navigation}){
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 25,
-    paddingHorizontal: 16,
+   
+    paddingHorizontal: 10,
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
@@ -252,32 +249,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
    
   },
-  overlay: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 12,
-    paddingHorizontal: 16,
-    paddingBottom: 48,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-  },
+
   /** Header */
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+   
   },
   headerAction: {
     width: 40,

@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet,Image,TouchableOpacity,Dimensions } from 'react-native';
+import { View, Text, StyleSheet,Image,TouchableOpacity,Dimensions, StatusBar } from 'react-native';
 const {width,height}=Dimensions.get("window")
 
 const Sblash = ({ navigation }) => {
 
 
   return (
+
     <View style={styles.container}>
+        <StatusBar  backgroundColor="#097ec0" ></StatusBar>
+
       <Image
         source={require('../assets/images/mapsblach.png')} // Update the path accordingly
         style={styles.logo}
@@ -34,6 +37,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
+    backgroundColor:'#ffffff'
   },
   buttons: {
     marginTop:60,

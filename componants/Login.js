@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-import { View, ImageBackground, StyleSheet, Text as RNText, Dimensions, Alert, SafeAreaView } from 'react-native';
+import { View, ImageBackground, StyleSheet, Text as RNText, Dimensions, Alert, SafeAreaView, StatusBar } from 'react-native';
 import { TextInput, Button,Text } from 'react-native-paper';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {auth} from './../firebase';
@@ -32,6 +32,7 @@ const Login = ({ navigation }) => {
   return (
    
     <View style={styles.container}>
+    <StatusBar  backgroundColor="#097ec0" ></StatusBar>
       <View style={styles.logoContainer}>
         <ImageBackground
           source={require('./../assets/images/logo.png')}
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'white'
   },
   logoContainer: {
     marginBottom: 10,

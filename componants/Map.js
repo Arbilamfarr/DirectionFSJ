@@ -83,8 +83,8 @@ const [sattelite,setSattelite]=useState(false)
               longitude: longitude,
             }}
             apikey={GOOGLE_MAPS_APIKEY}
-            strokeWidth={4}
-            strokeColor="blue"
+            strokeWidth={5}
+            strokeColor="#00c8fa"
             mode="WALKING"
           />
         )}
