@@ -48,7 +48,7 @@ const MainTabNavigator = () => {
               iconName =focused? 'home':'home-variant-outline';
             } else if (route.name === 'Event') {
               iconName = focused ?  'alpha-c-box':'alpha-c-box-outline';
-            }else if (route.name === 'AjouterEvent') {
+            }else if (route.name === 'AddEvent') {
               iconName =focused?'bookmark-plus': 'bookmark-plus-outline';
             }
 
@@ -58,7 +58,7 @@ const MainTabNavigator = () => {
       >
         <Tab.Screen name="Home" options={{headerShown:false}} component={Home} />
         <Tab.Screen name="Event" options={{headerShown:false}} component={Event} />
-        <Tab.Screen name="AjouterEvent" options={{headerShown:false}} component={AjouterEvent} />
+        <Tab.Screen name="AddEvent" options={{headerShown:false}} component={AjouterEvent} />
 
         
       </Tab.Navigator>

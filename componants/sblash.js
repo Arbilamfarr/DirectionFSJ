@@ -15,7 +15,7 @@ const Sblash = ({ navigation }) => {
         style={styles.logo}
         resizeMode="contain"
       />
-      <Text style={styles.title}>Bienvenu</Text>
+      <Text style={styles.title}>Wellcome</Text>
       <Text style={styles.fsj}>Faculté des sciences chouaib doukkali</Text>
         <View style={styles.buttons}>
       <TouchableOpacity onPress={() => {

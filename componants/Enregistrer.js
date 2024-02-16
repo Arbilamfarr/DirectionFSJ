@@ -43,7 +43,7 @@ const sendEmailVerificationUser = async (user) => {
       setPassword('')
     } catch (error) {
    
-      Alert.alert('Erreur d\'inscription', error.message);
+      Alert.alert('Error save', error.message);
     }}
   };
 
@@ -68,14 +68,14 @@ const sendEmailVerificationUser = async (user) => {
           style={styles.input}
         />
         <TextInput
-          label="Mot de passe"
+          label="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry
           style={styles.input}
         />
         <Button mode="contained" onPress={handleSignUp} style={styles.button}>
-          Enregistrer
+          Save
         </Button>
         
       </View>
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'white'
   },
   logoContainer: {
     marginBottom: 10,

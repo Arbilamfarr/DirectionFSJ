@@ -22,8 +22,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "useAndroidX": true,
-      "enableHermes": false,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBa6wKAcoJEA5h_gzJBuIqU6UNKc1sXbQk"
