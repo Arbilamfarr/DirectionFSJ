@@ -26,15 +26,15 @@ Your new event should now be successfully added.
 - User Guide: [User Guide](https://docs.google.com/presentation/d/1DYwO9btqvaI265ROwy3QT6MUOB42piE_/edit?usp=sharing&ouid=104949834596476959430&rtpof=true&sd=true) :
   ## Installation 🛠️
 
-Pour commencer avec notre application, suivez ces étapes d'installation :
+ for start with your app, following this steps :
 
-1. Clonez le dépôt sur votre machine locale :
+1. Clone le dépôt sur votre machine locale :
    ```bash
    - git clone https://github.com/Arbilamfarr/DirectionFSJ
    - cd DirectionFSJ 
    - npm install
    - npm start  
-
+<h3>start with your apiKey_google_map</h3>
 We hope this short guide will help you navigate our application. If you encounter any issues or have questions, feel free to contact our support service at linkedIn arbilamfarrad02@gmail.com.
 
 Thank you for choosing our application! 🚀
