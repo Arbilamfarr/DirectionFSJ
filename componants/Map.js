@@ -5,7 +5,7 @@ import { StyleSheet, View ,TouchableOpacity,Image} from "react-native";
 import MapViewDirections from "react-native-maps-directions";
 import * as Location from 'expo-location';
 
-const GOOGLE_MAPS_APIKEY = "AIzaSyBa6wKAcoJEA5h_gzJBuIqU6UNKc1sXbQk";
+const GOOGLE_MAPS_APIKEY = "apiKey_google_map";
 
 export default function Map(props) {
 

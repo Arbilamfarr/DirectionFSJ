@@ -31,7 +31,7 @@ Pour commencer avec notre application, suivez ces étapes d'installation :
 1. Clonez le dépôt sur votre machine locale :
    ```bash
    - git clone https://github.com/Arbilamfarr/DirectionFSJ
-   - cd DirectionFSJ
+   - cd DirectionFSJ 
    - npm install
    - npm start  
 
