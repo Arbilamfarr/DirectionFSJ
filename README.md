@@ -20,7 +20,20 @@ When you want to add a new event, please follow these steps:
 5. Click the "Save" button to save the event information.
 
 Your new event should now be successfully added.
-link for apk my app : https://expo.dev/accounts/arbilamfarrad/projects/UniversityMap/builds/11607362-fcd7-4aef-955c-e1e8a38f430f
+#### Download
+
+- APK: [Download APK](https://expo.dev/artifacts/eas/39sjQH4movBLRtUSDRhSAB.apk)
+- User Guide: [User Guide](https://docs.google.com/presentation/d/1DYwO9btqvaI265ROwy3QT6MUOB42piE_/edit?usp=sharing&ouid=104949834596476959430&rtpof=true&sd=true) :
+  ## Installation 🛠️
+
+Pour commencer avec notre application, suivez ces étapes d'installation :
+
+1. Clonez le dépôt sur votre machine locale :
+   ```bash
+   - git clone https://github.com/Arbilamfarr/DirectionFSJ
+   - cd DirectionFSJ
+   - npm install
+   - npm start  
 
 We hope this short guide will help you navigate our application. If you encounter any issues or have questions, feel free to contact our support service at linkedIn arbilamfarrad02@gmail.com.
 
