@@ -20,7 +20,8 @@ When you want to add a new event, please follow these steps:
 5. Click the "Save" button to save the event information.
 
 Your new event should now be successfully added.
+link for apk my app : https://expo.dev/accounts/arbilamfarrad/projects/UniversityMap/builds/11607362-fcd7-4aef-955c-e1e8a38f430f
 
-We hope this short guide will help you navigate our application. If you encounter any issues or have questions, feel free to contact our support service at support@example.com.
+We hope this short guide will help you navigate our application. If you encounter any issues or have questions, feel free to contact our support service at linkedIn arbilamfarrad02@gmail.com.
 
 Thank you for choosing our application! 🚀
